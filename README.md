@@ -12,6 +12,8 @@ npm i -D eslint eslint-config-react-app
 
 npm i -D @types/node
 
+npm i recharts
+
 # dependentcy for server
 
 npm init -y
