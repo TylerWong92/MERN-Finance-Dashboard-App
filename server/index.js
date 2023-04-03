@@ -17,26 +17,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-/* MONGOOSE SETUP OLD??? */
-// const PORT = process.env.PORT || 9000;
-// mongoose
-//   .connect(process.env.MONGO_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(async () => {
-//     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-//   })
-//   .catch((error) => console.log(`${error} did not connect`));
-
+/* MONGOOSE SETUP*/
 const PORT = process.env.PORT || 9000;
 mongoose
-  .connect("mongodb://localhost/myapp", {
-    useMongoClient: true,
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(async () => {
     app.listen(PORT, () =>
-      console.log(`Server Port: ${PORT} server is running`)
+      console.log(`Server Port: ${PORT} Server is running`)
     );
   })
   .catch((error) => console.log(`${error} did not connect`));
