@@ -30,4 +30,17 @@ export interface GetKpiResponse {
   expensesByCategory: ExpensesByCategory;
   monthlyData: Array<Month>;
   dailyData: Array<Day>;
+  createAt: string;
+  updatedAt: string;
+}
+
+export interface GetProductResponse {
+  id: string;
+  _id: string;
+  __v: number;
+  price: number;
+  expense: number;
+  transaction: Array<string>;
+  createAt: string;
+  updatedAt: string;
 }
