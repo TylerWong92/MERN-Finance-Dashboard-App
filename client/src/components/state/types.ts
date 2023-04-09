@@ -45,7 +45,7 @@ export interface GetProductResponse {
   updatedAt: string;
 }
 
-export interface GetTransectionResponse {
+export interface GetTransactionResponse {
   id: string;
   _id: string;
   __v: number;
