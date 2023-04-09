@@ -15,7 +15,6 @@ const Row3 = () => {
   const { data: kpiData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
   const { data: transactionData } = useGetTransactionsQuery();
-  console.log(transactionData);
 
   const productColumns = [
     {
@@ -58,7 +57,8 @@ const Row3 = () => {
       field: "productIds",
       headerName: "Count",
       flex: 0.1,
-      renderCell: (params: GridCellParams) => params.value.length,
+      renderCell: (params: GridCellParams) =>
+        (params.value as Array<string>).length,
     },
   ];
 
