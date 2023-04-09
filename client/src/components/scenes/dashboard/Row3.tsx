@@ -6,12 +6,15 @@ import {
   useGetTransactionsQuery,
 } from "@/components/state/api";
 import { useTheme } from "@mui/system";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import React from "react";
+import React, { useMemo } from "react";
+import FlexBetween from "@/components/FlexBetween";
+import { Cell, Pie, PieChart } from "recharts";
 
 const Row3 = () => {
   const { palette } = useTheme();
+  const pieColor = [palette.primary[800], palette.primary[300]];
   const { data: kpiData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
   const { data: transactionData } = useGetTransactionsQuery();
@@ -61,6 +64,26 @@ const Row3 = () => {
         (params.value as Array<string>).length,
     },
   ];
+
+  const pieChartData = useMemo(() => {
+    if (kpiData) {
+      const totalExpenses = kpiData[0].totalExpenses;
+      return Object.entries(kpiData[0].expensesByCategory).map(
+        ([key, value]) => {
+          return [
+            {
+              name: key,
+              value: value,
+            },
+            {
+              name: `${key} of Total`,
+              value: totalExpenses - value,
+            },
+          ];
+        }
+      );
+    }
+  }, [kpiData]);
 
   return (
     <>
@@ -132,7 +155,32 @@ const Row3 = () => {
           />
         </Box>
       </DashboardBox>
-      <DashboardBox gridArea="i"></DashboardBox>
+      <DashboardBox gridArea="i">
+        <BoxHeader title="Expense Breakdown By Category" sideText="+4%" />
+        <FlexBetween mt="0.5rem" gap="0.5rem" p="0 1rem" textAlign="center">
+          {pieChartData?.map((data, i) => {
+            return (
+              <Box key={`${data[0].name}-${i}`}>
+                <PieChart width={110} height={100}>
+                  <Pie
+                    stroke="none"
+                    data={data}
+                    innerRadius={18}
+                    outerRadius={35}
+                    paddingAngle={2}
+                    dataKey="value"
+                  >
+                    {data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={pieColor[index]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+                <Typography variant="h5">{data[0].name}</Typography>
+              </Box>
+            );
+          })}
+        </FlexBetween>
+      </DashboardBox>
       <DashboardBox gridArea="j"></DashboardBox>
     </>
   );
