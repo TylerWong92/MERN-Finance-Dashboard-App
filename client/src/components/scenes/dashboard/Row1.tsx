@@ -22,6 +22,7 @@ import {
 const Row1 = () => {
   const { palette } = useTheme();
   const { data } = useGetKpisQuery();
+
   console.log("data:", data);
 
   const revenue = useMemo(() => {
